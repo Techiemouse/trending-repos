@@ -1,10 +1,10 @@
-import { render, screen, act, waitFor, fireEvent } from '@testing-library/react';
+import { render, screen, act, fireEvent } from '@testing-library/react';
 import App from './App';
 import axios from 'axios';
 import userEvent from '@testing-library/user-event';
 
 jest.mock('axios');
-const repoMock = {name: 'repo name'}
+const repoMock = { name: 'repo name' }
 
 test('loads and displays 3 buttons', () => {
   render(<App />);
@@ -17,14 +17,13 @@ test('loads and displays 3 buttons', () => {
   expect(clearButton).toBeEnabled()
 })
 
-
 test('loads cards when repo found', async () => {
-  const promise = Promise.resolve({ data: {items: [repoMock]} });
+  const promise = Promise.resolve({ data: { items: [repoMock] } });
   axios.get.mockImplementationOnce(() => promise);
 
   render(<App />);
 
-  userEvent.click(screen.getByText(/Get top repos/i));
+  fireEvent.click(screen.getByText(/Get top repos/i));
   await act(() => promise);
 
   await screen.findByText(/repo name/);
@@ -32,12 +31,12 @@ test('loads cards when repo found', async () => {
   expect(screen.getByText('repo name')).toBeInTheDocument();
 })
 
-test('fetches stories from an API and fails', async () => {
+test('loads error message when api errors', async () => {
   axios.get.mockImplementationOnce(() =>
     Promise.reject(new Error())
   );
   render(<App />);
-  
+
   fireEvent.click(screen.getByText(/Get top repos/i));
   await screen.findByTestId('error');
 

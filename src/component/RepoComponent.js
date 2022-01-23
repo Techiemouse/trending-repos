@@ -1,4 +1,3 @@
-
 import Favorite from '@mui/icons-material/Favorite';
 import Checkbox from '@mui/material/Checkbox';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
@@ -17,15 +16,16 @@ function RepoComponent(props) {
 
       </CardHeader>
       <IconButton size="small" color="primary" href={props.repo.html_url} target="_blank">
-        <GitHub fontSize="inherit"/>Stars: {props.repo.stargazers_count}
+        <GitHub fontSize="inherit" />Stars: {props.repo.stargazers_count}
       </IconButton>
 
       <CardContent>
-        {props.repo.description}
+        <div>{props.repo.description}</div>
+        <div>Language: {props.repo.language}</div>
       </CardContent>
 
-      <IconButton onClick={() =>props.saveFavourite(props.repo)}>
-        <Checkbox icon={<FavoriteBorder/>} checkedIcon={<Favorite />} />
+      <IconButton onClick={() => props.saveFavourite(props.repo)}>
+        <Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} />
       </IconButton>
     </Card>
   )
