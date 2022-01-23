@@ -1,17 +1,33 @@
 
-
+import Favorite from '@mui/icons-material/Favorite';
+import Checkbox from '@mui/material/Checkbox';
+import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
+import GitHub from '@mui/icons-material/GitHub';
+import Card from '@mui/material/Card';
+import CardHeader from '@mui/material/CardHeader';
+import CardContent from '@mui/material/CardContent';
+import IconButton from '@mui/material/IconButton';
 
 function RepoComponent(props) {
-  return (
-    <div className="repo" key={props.index}>
-      <h3>repo {props.index + 1}</h3>
-      <h2>{props.repo.name}</h2>
 
-      <div className="details">
-        <p>: {props.repo.html_url}</p>
-        <p>: {props.repo.description}</p>
-      </div>
-    </div>
+  return (
+    <Card className="repo" sx={{ height: '100%' }}>
+      <CardHeader
+        title={props.repo.name}>
+
+      </CardHeader>
+      <IconButton size="small" color="primary" href={props.repo.html_url} target="_blank">
+        <GitHub fontSize="inherit"/>Stars: {props.repo.stargazers_count}
+      </IconButton>
+
+      <CardContent>
+        {props.repo.description}
+      </CardContent>
+
+      <IconButton onClick={() =>props.saveFavourite(props.repo)}>
+        <Checkbox icon={<FavoriteBorder/>} checkedIcon={<Favorite />} />
+      </IconButton>
+    </Card>
   )
 }
 
